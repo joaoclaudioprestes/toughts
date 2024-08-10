@@ -5,6 +5,7 @@ import { sequelize } from "./db/conn.js";
 import { config } from "dotenv";
 import path from "path";
 import pkg from "session-file-store";
+
 const FileStore = pkg(session);
 
 // Importando e instanciando express-handlebars
@@ -14,13 +15,12 @@ config();
 const app = express();
 
 // Models
-import User from "./models/User.js";
-import Tought from "./models/Tought.js";
 import router from "./routes/toughtsRoutes.js";
 
 // Template Engine
 app.engine("hbs", engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
+app.set("views", path.join(process.cwd(), "views"));
 
 // Request Body
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +49,7 @@ app.use(
 app.use(flash());
 
 // Config path for public folder
-app.use(path.join(process.cwd(), "public"), express.static("public"));
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Save session to response
 app.use((req, res, next) => {

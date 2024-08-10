@@ -1,23 +1,19 @@
 import { sequelize } from "../db/conn.js";
 import { DataTypes } from "sequelize";
 
-const db = sequelize;
-
-const User = db.define("User", {
+export const User = sequelize.define("User", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
   },
 });
 
